@@ -1,8 +1,26 @@
 <h1 class="screenTitle">Upload your images here!</h1>
+<app-upload-form
+  *ngFor="let uuid of imageFormUUIDs"
+  [uuid]="uuid"
+  (remove)="removeImageForm($event)"
+></app-upload-form>
 
-<app-upload-form (formUpdate)="updateUploadDetails($event)"></app-upload-form>
+<section class="actions">
+  <button
+    mat-fab
+    color="primary"
+    aria-label="Add new image"
+    (click)="addNewImageForm()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
 
-<ng-container *ngIf="uploadImages$ | async"> </ng-container>
-
-<p>Upload progress: {{ uploadProgress }}%</p>
-<button id="uploadBtn" (click)="onUpload()">&uarr;</button>
+  <button
+    mat-fab
+    color="primary"
+    aria-label="Upload all images"
+    (click)="uploadImages()"
+  >
+    <mat-icon>upload</mat-icon>
+  </button>
+</section>

@@ -1,10 +1,16 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { UploadableImage } from '../models/uploadableImage.model';
-import { debounce, interval } from 'rxjs';
-import ImageFormBuilder from '../helpers/ImageFormBuilder';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { tap } from 'rxjs/operators';
 
-const DEBOUNCE_INTERVAL_MS = 500;
+import { UploadableImage } from '../models/uploadableImage.model';
+import { ImagesService } from '../services/images.service';
+
+enum UPLOAD_STATUSES {
+  READY_FOR_UPLOAD = 'READY_FOR_UPLOAD',
+  LOADING = 'LOADING',
+  SUCCESS = 'SUCCESS',
+  ERROR = 'ERROR',
+}
 
 @Component({
   selector: 'app-upload-form',
@@ -12,42 +18,34 @@ const DEBOUNCE_INTERVAL_MS = 500;
   styleUrls: ['./upload-form.component.less'],
 })
 export class UploadFormComponent implements OnInit {
-  @Output() formUpdate = new EventEmitter<UploadableImage[]>();
+  @Input() uuid: string = '';
+  @Output() remove = new EventEmitter<string>();
 
-  newImagesCount: number = 1;
-  uploadedImages: UploadableImage[] = [];
+  uploadStatus: UPLOAD_STATUSES = UPLOAD_STATUSES.READY_FOR_UPLOAD;
+  UPLOAD_STATUSES = UPLOAD_STATUSES;
 
-  uploadFormGroup = new FormGroup({});
+  imageForm = new FormGroup({
+    title: new FormControl('', { nonNullable: true }),
+    tags: new FormControl('', { nonNullable: true }),
+    file: new FormControl('', Validators.required),
+  });
 
-  //TODO: Dependency Injection?
-  imageFormBuilder = new ImageFormBuilder();
+  constructor(private imageService: ImagesService) {}
 
-  constructor() {
-    this.uploadFormGroup.addControl(
-      ...this.imageFormBuilder.createNewImageFormGroup()
-    );
-  }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    this.uploadFormGroup.valueChanges
-      .pipe(debounce((_) => interval(DEBOUNCE_INTERVAL_MS)))
-      .subscribe((formValue) => {
-        console.log(formValue);
-        this.formUpdate.emit(Object.values(formValue));
+  uploadImage(): void {
+    this.uploadStatus = UPLOAD_STATUSES.LOADING;
+    this.imageService
+      .upload(this.imageForm.value as UploadableImage)
+      .subscribe({
+        next: () => (this.uploadStatus = UPLOAD_STATUSES.SUCCESS),
+        error: () => (this.uploadStatus = UPLOAD_STATUSES.ERROR),
+        complete: () => console.log('complete'),
       });
   }
 
-  logFile(event: Event): void {
-    console.log(event);
-  }
-
-  getImageFormNames(): string[] {
-    return Object.keys(this.uploadFormGroup.controls);
-  }
-
-  addNewImageForm(): void {
-    this.uploadFormGroup.addControl(
-      ...this.imageFormBuilder.createNewImageFormGroup()
-    );
+  removeImage(): void {
+    this.remove.emit(this.uuid);
   }
 }
