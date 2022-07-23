@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { ImageListComponent } from './image-list/image-list.component';
 import { ImageComponent } from './image/image.component';
 import { ImagesService } from './services/images.service';
+import { UploadButtonComponent } from './upload-button/upload-button.component';
 
 @NgModule({
-  declarations: [AppComponent, ImageListComponent, ImageComponent],
+  declarations: [AppComponent, ImageListComponent, ImageComponent, UploadButtonComponent],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [ImagesService],
   bootstrap: [AppComponent],
