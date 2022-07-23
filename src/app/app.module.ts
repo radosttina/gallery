@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
+import { SearchFieldComponent } from './search-field/search-field.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { HeaderComponent } from './header/header.component';
     UploadScreenComponent,
     FileUploaderComponent,
     HeaderComponent,
+    SearchFieldComponent,
   ],
   imports: [
     BrowserModule,
