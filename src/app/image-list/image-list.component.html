@@ -1,5 +1,5 @@
 <app-image
-  *ngFor="let image of images$ | async"
+  *ngFor="let image of filteredImages$ | async"
   [title]="image.title"
   [file]="image.file"
   [tags]="image.tags"

@@ -8,7 +8,7 @@ import { ImagesService } from '../services/images.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImageListComponent implements OnInit {
-  images$ = this.service.images$;
+  filteredImages$ = this.service.filteredImages$;
   constructor(private service: ImagesService) {}
 
   ngOnInit(): void {}
