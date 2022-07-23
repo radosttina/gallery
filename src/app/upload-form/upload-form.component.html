@@ -8,30 +8,36 @@
   <label>File:</label>
   <app-file-uploader formControlName="file"></app-file-uploader>
 
-  <button
-    mat-fab
-    class="uploadBtn {{ uploadStatus }}"
-    color="secondary"
-    aria-label="Upload the image"
-    (click)="uploadImage()"
-  >
-    <mat-icon
-      aria-hidden="false"
-      aria-label="Example home icon"
-      [ngSwitch]="uploadStatus"
+  <section class="formActions">
+    <button
+      mat-fab
+      class="uploadBtn {{ uploadStatus }}"
+      color="secondary"
+      aria-label="Upload the image"
+      (click)="uploadImage()"
     >
-      <span *ngSwitchCase="UPLOAD_STATUSES.READY_FOR_UPLOAD">upload</span>
-      <span *ngSwitchCase="UPLOAD_STATUSES.SUCCESS">done</span>
-      <span *ngSwitchCase="UPLOAD_STATUSES.ERROR">replay</span>
-      <span *ngSwitchCase="UPLOAD_STATUSES.LOADING">pending</span>
-    </mat-icon>
-  </button>
-  <button
-    mat-fab
-    color="warn"
-    aria-label="Delete the image"
-    (click)="removeImage()"
-  >
-    <mat-icon>delete</mat-icon>
-  </button>
+      <mat-icon
+        [color]="uploadStatus === UPLOAD_STATUSES.ERROR ? 'warn' : ''"
+        aria-hidden="false"
+        aria-label="Example home icon"
+        [ngSwitch]="uploadStatus"
+      >
+        <span *ngSwitchCase="UPLOAD_STATUSES.READY_FOR_UPLOAD">upload</span>
+        <span *ngSwitchCase="UPLOAD_STATUSES.SUCCESS">done</span>
+        <span *ngSwitchCase="UPLOAD_STATUSES.ERROR">replay</span>
+        <span *ngSwitchCase="UPLOAD_STATUSES.LOADING">pending</span>
+      </mat-icon>
+    </button>
+    <button
+      mat-fab
+      color="warn"
+      aria-label="Delete the image"
+      (click)="removeImage()"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+    <span *ngIf="uploadStatus === UPLOAD_STATUSES.ERROR" class="error"
+      >Please try again.</span
+    >
+  </section>
 </form>
