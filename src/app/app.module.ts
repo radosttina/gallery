@@ -12,6 +12,7 @@ import { UploadFormComponent } from './upload-form/upload-form.component';
 import { HomeComponent } from './home/home.component';
 import { UploadScreenComponent } from './upload-screen/upload-screen.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     UploadFormComponent,
     HomeComponent,
     UploadScreenComponent,
+    FileUploaderComponent,
   ],
   imports: [
     BrowserModule,

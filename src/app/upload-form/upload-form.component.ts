@@ -32,9 +32,13 @@ export class UploadFormComponent implements OnInit {
     this.uploadFormGroup.valueChanges
       .pipe(debounce((_) => interval(DEBOUNCE_INTERVAL_MS)))
       .subscribe((formValue) => {
-        console.log(this.uploadFormGroup);
+        console.log(formValue);
         this.formUpdate.emit(Object.values(formValue));
       });
+  }
+
+  logFile(event: Event): void {
+    console.log(event);
   }
 
   getImageFormNames(): string[] {

@@ -25,7 +25,6 @@ export class UploadScreenComponent implements OnInit {
             ) /* Used just to mock the progress indicator functionality */,
             catchError((errors) => of(errors)),
             finalize(() => {
-              console.log('fin');
               this.calculateProgress(++this.counter, images.length);
             })
           )

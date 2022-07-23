@@ -11,7 +11,7 @@
     <input id="tags" type="text" formControlName="tags" />
 
     <label>File:</label>
-    <input id="file" type="file" formControlName="file" />
+    <app-file-uploader formControlName="file"></app-file-uploader>
   </form>
 </form>
 <button id="newImageBtn" (click)="addNewImageForm()">+</button>
