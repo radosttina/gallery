@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ImageComponent implements OnInit {
   @Input() title: string = '';
-  @Input() url: string = '';
+  @Input() file: string | File = '';
   @Input() tags: string[] = [];
 
   constructor() {}

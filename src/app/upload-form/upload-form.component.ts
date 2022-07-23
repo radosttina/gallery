@@ -1,15 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { UploadableImage } from '../models/uploadableImage.model';
+import { debounce, interval } from 'rxjs';
+import ImageFormBuilder from '../helpers/ImageFormBuilder';
+
+const DEBOUNCE_INTERVAL_MS = 500;
 
 @Component({
   selector: 'app-upload-form',
   templateUrl: './upload-form.component.html',
-  styleUrls: ['./upload-form.component.less']
+  styleUrls: ['./upload-form.component.less'],
 })
 export class UploadFormComponent implements OnInit {
+  @Output() formUpdate = new EventEmitter<UploadableImage[]>();
 
-  constructor() { }
+  newImagesCount: number = 1;
+  uploadedImages: UploadableImage[] = [];
 
-  ngOnInit(): void {
+  uploadFormGroup = new FormGroup({});
+
+  //TODO: Dependency Injection?
+  imageFormBuilder = new ImageFormBuilder();
+
+  constructor() {
+    this.uploadFormGroup.addControl(
+      ...this.imageFormBuilder.createNewImageFormGroup()
+    );
   }
 
+  ngOnInit(): void {
+    this.uploadFormGroup.valueChanges
+      .pipe(debounce((_) => interval(DEBOUNCE_INTERVAL_MS)))
+      .subscribe((formValue) => {
+        console.log(this.uploadFormGroup);
+        this.formUpdate.emit(Object.values(formValue));
+      });
+  }
+
+  getImageFormNames(): string[] {
+    return Object.keys(this.uploadFormGroup.controls);
+  }
+
+  addNewImageForm(): void {
+    this.uploadFormGroup.addControl(
+      ...this.imageFormBuilder.createNewImageFormGroup()
+    );
+  }
 }

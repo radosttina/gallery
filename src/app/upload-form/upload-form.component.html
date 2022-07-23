@@ -1,1 +1,17 @@
-<p>upload-form works!</p>
+<form class="parentForm" [formGroup]="uploadFormGroup">
+  <form
+    class="nestedForm"
+    *ngFor="let imageGroup of getImageFormNames()"
+    formGroupName="{{ imageGroup }}"
+  >
+    <label>Name:</label>
+    <input id="title" type="text" formControlName="title" />
+
+    <label>Tags:</label>
+    <input id="tags" type="text" formControlName="tags" />
+
+    <label>File:</label>
+    <input id="file" type="file" formControlName="file" />
+  </form>
+</form>
+<button id="newImageBtn" (click)="addNewImageForm()">+</button>

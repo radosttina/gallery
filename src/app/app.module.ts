@@ -11,10 +11,24 @@ import { UploadButtonComponent } from './upload-button/upload-button.component';
 import { UploadFormComponent } from './upload-form/upload-form.component';
 import { HomeComponent } from './home/home.component';
 import { UploadScreenComponent } from './upload-screen/upload-screen.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, ImageListComponent, ImageComponent, UploadButtonComponent, UploadFormComponent, HomeComponent, UploadScreenComponent],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
+  declarations: [
+    AppComponent,
+    ImageListComponent,
+    ImageComponent,
+    UploadButtonComponent,
+    UploadFormComponent,
+    HomeComponent,
+    UploadScreenComponent,
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+  ],
   providers: [ImagesService],
   bootstrap: [AppComponent],
 })
