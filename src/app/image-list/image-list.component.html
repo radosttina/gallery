@@ -1,7 +1,6 @@
-<section *ngFor="let image of images$ | async">
-  <app-image
-    [title]="image.title"
-    [url]="image.url"
-    [tags]="image.tags"
-  ></app-image>
-</section>
+<app-image
+  *ngFor="let image of images$ | async"
+  [title]="image.title"
+  [url]="image.url"
+  [tags]="image.tags"
+></app-image>
